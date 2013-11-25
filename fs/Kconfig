@@ -17,6 +17,12 @@ config LOW_ORDER_SEQ_MALLOC
 	 This will cause system performance degradation.
 	 When high-order allocation is requested, change it to vmalloc.
 
+config ASYNC_FSYNC
+	bool "Asynchronous Filesystem Sync"
+	default n
+	help
+	  HTC's asynchronous filesystem sync utility.
+
 if BLOCK
 
 source "fs/ext2/Kconfig"
