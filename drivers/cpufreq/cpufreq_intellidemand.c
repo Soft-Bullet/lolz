@@ -25,7 +25,6 @@
 #include <linux/input.h>
 #include <linux/workqueue.h>
 #include <linux/slab.h>
-#include <linux/earlysuspend.h>
 
 // #define _LIMIT_LCD_OFF_CPU_MAX_FREQ_
 
