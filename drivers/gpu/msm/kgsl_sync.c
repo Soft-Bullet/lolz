@@ -222,6 +222,8 @@ int kgsl_add_fence_event(struct kgsl_device *device,
 	}
 	sync_fence_install(fence, priv.fence_fd);
 
+	sync_fence_install(fence, priv.fence_fd);
+
 	return 0;
 
 unlock:
