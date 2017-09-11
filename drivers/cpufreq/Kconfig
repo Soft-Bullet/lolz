@@ -353,7 +353,7 @@ config CPU_FREQ_GOV_LIONHEART
 
 config CPU_FREQ_GOV_ADAPTIVE
 	tristate "'adaptive' cpufreq policy governor"
-	default y
+	default n
 	help
 	  'adaptive' - This driver adds a dynamic cpufreq policy governor
 	  designed for latency-sensitive workloads and also for demanding
