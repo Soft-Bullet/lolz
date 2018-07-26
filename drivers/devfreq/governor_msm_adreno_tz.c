@@ -49,10 +49,6 @@ static DEFINE_SPINLOCK(tz_lock);
 
 #define TAG "msm_adreno_tz: "
 
-/* Boolean to detect if pm has entered suspend mode */
-static bool suspended = false;
-static bool power_suspended = false;
-
 /* Trap into the TrustZone, and call funcs there. */
 static int __secure_tz_entry2(u32 cmd, u32 val1, u32 val2)
 {
@@ -123,15 +119,6 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 
 	*freq = stats.current_frequency;
 	*flag = 0;
-
-	/*
-	 * Force to use & record as min freq when system has
-	 * entered pm-suspend or screen-off state.
-	 */
-	if (suspended || power_suspended) {
-		*freq = devfreq->min_freq;
-		return 0;
-	}
 
 #ifdef CONFIG_ADRENO_IDLER
 	if (adreno_idler(stats, devfreq, freq)) {
