@@ -104,10 +104,15 @@ static struct devfreq_msm_adreno_tz_data kt_simple_data = {
 	.device_id = KGSL_DEVICE_3D0,
 };
 
+static struct devfreq_msm_adreno_tz_data adreno_conservative_data = {
+	.device_id = KGSL_DEVICE_3D0,
+};
+
 static const struct devfreq_governor_data adreno_governors[] = {
 	{ .name = "simple_ondemand", .data = &adreno_ondemand_data },
 	{ .name = "msm-adreno-tz", .data = &adreno_tz_data },
 	{ .name = "kt-simple", .data = &kt_simple_data },
+	{ .name = "conservative", .data = &adreno_conservative_data },
 };
 
 static const struct kgsl_functable adreno_functable;
