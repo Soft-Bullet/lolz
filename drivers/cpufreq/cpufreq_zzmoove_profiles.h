@@ -232,12 +232,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		1,		// Default Profile
 		"def",		// default settings as hardcoded in the governor (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds (any value=enable, 0=disable)
+		1,		// auto_adjust_freq_thresholds (any value=enable, 0=disable)
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug (1=disable hotplugging, 0=enable hotplugging)
+		0,		// disable_hotplug (1=disable hotplugging, 0=enable hotplugging)
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep (1=disable hotplugging, 0=enable hotplugging)
+		0,		// disable_hotplug_sleep (1=disable hotplugging, 0=enable hotplugging)
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		52,		// down_threshold (range from 11 to 100 and must be lower than up_threshold)
@@ -279,8 +279,8 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		0,		// fast_scaling_up (range from 0 to 4)
 		0,		// fast_scaling_down (range from 0 to 4)
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		0,		// fast_scaling_sleep_up (range from 0 to 4)
-		0,		// fast_scaling_sleep_down (range from 0 to 4)
+		4,		// fast_scaling_sleep_up (range from 0 to 4)
+		4,		// fast_scaling_sleep_down (range from 0 to 4)
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 		25,		// auto fast scaling step one (range from 1 to 100)
 		50,		// auto fast scaling step two (range from 1 to 100)
@@ -407,12 +407,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		2,
 		"ybat",		// Yank555.lu Battery Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		40,		// down_threshold
@@ -582,12 +582,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		3,
 		"ybatext",	// Yank555.lu Battery Extreme Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		50,		// down_threshold
@@ -757,12 +757,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		4,
 		"zzbat",	// ZaneZam Battery Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		40,		// down_threshold
@@ -932,12 +932,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		5,
 		"zzbatp",	// ZaneZam Battery Plus Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		70,		// down_threshold
@@ -1108,12 +1108,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		6,
 		"zzopt",	// ZaneZam Optimized Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		52,		// down_threshold
@@ -1283,12 +1283,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		7,
 		"zzmod",	// ZaneZam Moderate Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		52,		// down_threshold
@@ -1458,12 +1458,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		8,
 		"zzperf",	// ZaneZam Performance Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		20,		// down_threshold
@@ -1633,12 +1633,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		9,
 		"zzinz",	// ZaneZam InZane Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		20,		// down_threshold
@@ -1808,12 +1808,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		10,
 		"zzgame",	// ZaneZam Game Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		20,		// down_threshold
@@ -1985,12 +1985,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		11,
 		"zzrelax",	// ZaneZam Relax Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		52,		// down_threshold
@@ -2160,12 +2160,12 @@ struct zzmoove_profile zzmoove_profiles[] = {
 		12,
 		"lwk",		// LWK Profile (please don't remove this profile)
 #ifdef ENABLE_AUTO_ADJUST_FREQ
-		0,		// auto_adjust_freq_thresholds
+		1,		// auto_adjust_freq_thresholds
 #endif /* ENABLE_AUTO_ADJUST_FREQ */
 #ifdef ENABLE_HOTPLUGGING
-		1,		// disable_hotplug
+		0,		// disable_hotplug
 #if defined(CONFIG_HAS_EARLYSUSPEND) || defined(CONFIG_POWERSUSPEND) || defined(USE_LCD_NOTIFIER)
-		1,		// disable_hotplug_sleep
+		0,		// disable_hotplug_sleep
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND)... */
 #endif /* ENABLE_HOTPLUGGING */
 		50,		// down_threshold
