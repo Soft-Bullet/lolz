@@ -145,7 +145,7 @@ extern int tegra_input_boost (struct cpufreq_policy *policy,
 #define DEFAULT_INPUT_BOOST_DURATION 150000
 #define DEFAULT_TOUCH_POKE_FREQ 1497600
 #define DEFAULT_BOOST_FREQ 1497600
-#define DEFAULT_IO_IS_BUSY 0
+#define DEFAULT_IO_IS_BUSY 1
 #define DEFAULT_IGNORE_NICE 1
 #endif
 
@@ -206,7 +206,7 @@ static bool ramp_up_during_boost = true;
  * to sysfs for boost_duration
  */
 static unsigned int boost_freq;
-static bool boost = true;
+static bool boost = false;
 
 /* in usecs */
 static unsigned int boost_duration = 0;
