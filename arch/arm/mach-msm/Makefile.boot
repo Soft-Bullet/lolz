@@ -133,6 +133,10 @@ endif
 	dtb-$(CONFIG_SEC_N2_PROJECT)	+= msm8974-sec-n2-r00.dtb
 ifeq ($(CONFIG_SEC_H_PROJECT),y)
 ifeq ($(CONFIG_SEC_LOCALE_KOR),y)
+	dtb-y += msm8974-sec-hltekor-r04.dtb
+	dtb-y += msm8974-sec-hltekor-r05.dtb
+	dtb-y += msm8974-sec-hltekor-r06.dtb
+	dtb-y += msm8974-sec-hltekor-r07.dtb
 else ifeq ($(CONFIG_SEC_LOCALE_JPN),y)
 	dtb-y	+= msm8974-sec-hltejpn-r05.dtb
 	dtb-y	+= msm8974-sec-hltejpn-r06.dtb
@@ -172,10 +176,6 @@ else
 					dtb-y += msm8974-sec-hlte-r06.dtb
 					dtb-y += msm8974-sec-hlte-r07.dtb
 					dtb-y += msm8974-sec-hlte-r09.dtb
-                    dtb-y += msm8974-sec-hltekor-r04.dtb
-	                dtb-y += msm8974-sec-hltekor-r05.dtb
-	                dtb-y += msm8974-sec-hltekor-r06.dtb
-	                dtb-y += msm8974-sec-hltekor-r07.dtb
 				endif
 			endif
 		endif
