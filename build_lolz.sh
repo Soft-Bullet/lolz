@@ -7,7 +7,7 @@
 #
 # ***** ***** *Variables to be configured manually* ***** ***** #
 
-TOOLCHAIN="/home/jprim/linaro7/bin/arm-eabi-"
+TOOLCHAIN="/home/jprim/aex/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
 
 ARCHITECTURE="arm"
 

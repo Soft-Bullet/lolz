@@ -6,16 +6,9 @@
 # begin properties
 properties() { '
 kernel.string=
-do.devicecheck=1
 do.modules=0
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=hlte
-device.name2=hltexx
-device.name3=hltechn
-device.name4=hltetmo
-device.name5=hltekor
-device.name6=hltespr
 '; } # end properties
 
 # shell variables
@@ -31,25 +24,16 @@ ramdisk_compression=auto;
 
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
-chmod -R 750 $ramdisk/*;
-chmod -R 755 $ramdisk/sbin;
-chown -R root:root $ramdisk/*;
+chmod -R 755 $ramdisk;
 
 ## AnyKernel install
 dump_boot;
 
 # begin ramdisk changes
 
-# init.rc mod
-backup_file init.rc;
-grep "import /init.lolz.rc" init.rc >/dev/null || sed -i '1,/.*import.*/s/.*import.*/import \/init.lolz.rc\n&/' init.rc
-
-# init.qcom.rc
+# init.lolz.rc init
 backup_file init.qcom.rc;
-remove_line init.qcom.rc "start mpdecision";
-
-# permissive mode
-#patch_cmdline "androidboot.selinux=permissive" "androidboot.selinux=permissive"
+insert_line init.qcom.rc "init.lolz.rc" after "import init.target.rc" "import init.lolz.rc";
 
 # end ramdisk changes
 
