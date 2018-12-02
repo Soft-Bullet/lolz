@@ -7,7 +7,7 @@
 #
 # ***** ***** *Variables to be configured manually* ***** ***** #
 
-TOOLCHAIN="/home/jprim/aex/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
+TOOLCHAIN="/home/jprim/linaro/bin/arm-linux-androideabi-"
 
 ARCHITECTURE="arm"
 
@@ -101,7 +101,7 @@ if [ -e $KERNEL_IMAGE ]; then
 		mkdir $RELEASE_DIR
 	fi
 	rm $ANYKERNEL_DIR/zImage && mv $ANYKERNEL_DIR/$KERNEL_NAME-$KERNEL_VARIANT* $RELEASE_DIR
-	echo -e $COLOR_GREEN"\n Building finished... please visit '$RELEASE_DIR'...\n"$COLOR_NEUTRAL
+	echo -e $COLOR_GREEN"\n Lolz is baked... please visit '$RELEASE_DIR'...\n"$COLOR_NEUTRAL
 else
 	echo -e $COLOR_RED"\n Building failed. Please fix the issues and try again...\n"$COLOR_RED
 fi
