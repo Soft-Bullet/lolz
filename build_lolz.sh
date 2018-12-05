@@ -15,7 +15,7 @@ KERNEL_NAME="LolZ-kernel"
 
 KERNEL_VARIANT="hlte"	# options: hlte, hltekor, hltetmo, hltechn
 
-KERNEL_VERSION="6.2"   # leave as such, if no specific version tag
+KERNEL_VERSION="6.3"   # leave as such, if no specific version tag
 
 KERNEL_DATE="$(date +"%Y%m%d")"
 

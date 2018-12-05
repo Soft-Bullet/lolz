@@ -55,7 +55,6 @@ fi;
 bb=/tmp/anykernel/tools/busybox;
 chmod 755 $bb;
 $bb chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
-
 if [ -f /tmp/anykernel/banner ]; then
   while IFS='' read -r line || $bb [[ -n "$line" ]]; do
     ui_print "$line";
@@ -64,13 +63,12 @@ fi;
 
 ui_print "===================================";
 ui_print "*  LolZ-Kernel For 8.1.x and 9.x  *";
-ui_print "*                                 *";
 ui_print "*          by jprimero15          *";
 ui_print "===================================";
-ui_print "* Are you ready??                  ";
+ui_print "                                   ";
 ui_print "* Logging in to twrp.me...         ";
 ui_print "* Logged in successfully!          ";
-ui_print "* Lolz version: 6.2";
+ui_print "* Lolz version: 6.3";
 
 umount /system 2>/dev/null;
 umount /vendor 2>/dev/null;
@@ -80,6 +78,8 @@ mount /data 2>/dev/null;
 test -f /system/system/build.prop && root=/system;
 
 ui_print "* Uploading info in twrp.me..";
+ui_print "* Uploaded Successfully!";
+ui_print "* Destroying the System... ";
 for i in $($bb --list); do
   $bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
@@ -126,12 +126,13 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
 
-ui_print "* Uploaded Successfully!";
+ui_print "* System Destroyed!!..    ";
 ui_print "* Logging out...";
 
 umount /system;
 umount /vendor 2>/dev/null;
 umount /data 2>/dev/null;
+ui_print "                                   ";
 ui_print "===================================";
 ui_print "*     LolZ-Kernel Installed!!     *";
 ui_print "===================================";
