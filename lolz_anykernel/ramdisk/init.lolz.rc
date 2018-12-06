@@ -47,7 +47,8 @@ on property:sys.boot_completed=1
 
 # Set GPU Governor
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor "msm-adreno-tz"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq "100000000"
+#    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq "100000000"
+    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq "27000000"
     write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq "600000000"
     write /sys/class/kgsl/kgsl-3d0/max_gpuclk "450000000"
 
