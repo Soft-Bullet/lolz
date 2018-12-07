@@ -24,20 +24,31 @@ ramdisk_compression=auto;
 
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
-chmod -R 755 $ramdisk;
+chmod -R 750 $ramdisk/*;
+chown -R root:root $ramdisk/*;
 
 ## AnyKernel install
 dump_boot;
 
 # begin ramdisk changes
 
-# init.lolz.rc init
+# init.rc
+backup_file init.rc;
+grep "import /init.lolz.rc" init.rc >/dev/null || sed -i '1,/.*import.*/s/.*import.*/import \/init.lolz.rc\n&/' init.rc
+
+ # init.qcom.rc
 backup_file init.qcom.rc;
-insert_line init.qcom.rc "init.lolz.rc" after "import init.target.rc" "import init.lolz.rc";
+remove_line init.qcom.rc "start mpdecision";
+insert_line init.qcom.rc "u:r:supersu:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:supersu:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "u:r:magisk:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:magisk:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "u:r:su:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:su:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "u:r:init:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:init:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "u:r:supersu:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:supersu:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:supersu:s0 root root -- /init.lolz.sh"
+insert_line init.qcom.rc "Execute lolz boot script..." after "Post boot services" "    # Execute lolz boot script..."
 
 # end ramdisk changes
 
 write_boot;
 
 ## end install
-
