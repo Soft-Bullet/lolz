@@ -69,6 +69,11 @@
     echo 0 > /sys/block/mmcblk1/queue/iostats
     echo 2048 > /sys/block/mmcblk1/queue/read_ahead_kb
 
+    # Set TCP Congestion
+    chmod 777 /proc/sys/net/ipv4/tcp_congestion_control
+    echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
+    chmod 644 /proc/sys/net/ipv4/tcp_congestion_control
+
     # Disable CPU Input Boost
     echo 0 /sys/kernel/cpu_input_boost/enabled
 
