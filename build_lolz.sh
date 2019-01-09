@@ -13,6 +13,8 @@ ARCHITECTURE="arm"
 
 KERNEL_NAME="LolZ-kernel"
 
+LOLZ_NAME="⚡LolZ-kernel⚡"
+
 KERNEL_VARIANT="hlte"	# options: hlte, hltekor, hltetmo, hltechn
 
 KERNEL_VERSION="6.3"   # leave as such, if no specific version tag
@@ -71,7 +73,7 @@ fi
 echo -e $COLOR_NEUTRAL"\n building $KERNEL_NAME $KERNEL_VERSION for $KERNEL_VARIANT \n"$COLOR_NEUTRAL
 make -C $(pwd) O=$BUILD_DIR $KERNEL_DEFCONFIG
 # updating kernel version
-sed -i "s;lineageos;$KERNEL_NAME-V$KERNEL_VERSION;" $BUILD_DIR/.config;
+sed -i "s;lineageos;$LOLZ_NAME-V$KERNEL_VERSION;" $BUILD_DIR/.config;
 make -j$NUM_CPUS -C $(pwd) O=$BUILD_DIR
 if [ -e $KERNEL_IMAGE ]; then
 	echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
