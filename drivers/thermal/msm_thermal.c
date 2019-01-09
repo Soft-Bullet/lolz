@@ -1357,9 +1357,6 @@ static void __ref check_temp(struct work_struct *work)
 	long temp = 0;
 	int ret = 0;
 
-	if (!msm_thermal_probed)
-		return;
-
 	do_therm_reset();
 
 	ret = therm_get_temp(msm_thermal_info.sensor_id, THERM_TSENS_ID, &temp);
@@ -2051,14 +2048,14 @@ static ssize_t __ref store_cc_enabled(struct kobject *kobj,
 
 	core_control_enabled = !!val;
 	if (core_control_enabled) {
-		pr_debug("Core control enabled\n");
+		pr_info("Core control enabled\n");
 		register_cpu_notifier(&msm_thermal_cpu_notifier);
 		if (hotplug_task)
 			complete(&hotplug_notify_complete);
 		else
 			pr_err("Hotplug task is not initialized\n");
 	} else {
-		pr_debug("Core control disabled\n");
+		pr_info("Core control disabled\n");
 		unregister_cpu_notifier(&msm_thermal_cpu_notifier);
 	}
 
