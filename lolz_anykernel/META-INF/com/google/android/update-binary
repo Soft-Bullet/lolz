@@ -61,14 +61,24 @@ if [ -f /tmp/anykernel/banner ]; then
   done < /tmp/anykernel/banner;
 fi;
 
-ui_print "===================================";
-ui_print "*  LolZ-Kernel For 8.1.x and 9.x  *";
-ui_print "*          by jprimero15          *";
-ui_print "===================================";
+ui_print " ██▓     ▒█████   ██▓    ▒███████▒"
+ui_print "▓██▒    ▒██▒  ██▒▓██▒    ▒ ▒ ▒ ▄▀░"
+ui_print "▒██░    ▒██░  ██▒▒██░    ░ ▒ ▄▀▒░ "
+ui_print "▒██░    ▒██   ██░▒██░      ▄▀▒   ░"
+ui_print "░██████▒░ ████▓▒░░██████▒▒███████▒"
+ui_print "░ ▒░▓  ░░ ▒░▒░▒░ ░ ▒░▓  ░░▒▒ ▓░▒░▒"
+ui_print "░ ░ ▒  ░  ░ ▒ ▒░ ░ ░ ▒  ░░░▒ ▒ ░ ▒"
+ui_print "  ░ ░   ░ ░ ░ ▒    ░ ░   ░ ░ ░ ░ ░"
+ui_print "    ░  ░    ░ ░      ░  ░  ░ ░  "  
+ui_print "                         ░      "  
+ui_print "  ===================================";
+ui_print "  *  LolZ-Kernel For 8.1.x and 9.x  *";
+ui_print "  *          by jprimero15          *";
+ui_print "  ===================================";
 ui_print "                                   ";
-ui_print "* Logging in to twrp.me...         ";
-ui_print "* Logged in successfully!          ";
-ui_print "* Lolz version: 6.3";
+ui_print "  * Logging in to twrp.me...         ";
+ui_print "  * Logged in successfully!          ";
+ui_print "  * Lolz version: 6.4";
 
 umount /system 2>/dev/null;
 umount /vendor 2>/dev/null;
@@ -77,14 +87,14 @@ mount -o ro -t auto /vendor 2>/dev/null;
 mount /data 2>/dev/null;
 test -f /system/system/build.prop && root=/system;
 
-ui_print "* Uploading info in twrp.me..";
-ui_print "* Uploaded Successfully!";
-ui_print "* Destroying the System... ";
+ui_print "  * Uploading info in twrp.me..";
+ui_print "  * Uploaded Successfully!";
+ui_print "  * Energizing the System... ";
 for i in $($bb --list); do
   $bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
 if [ $? != 0 -o -z "$(ls /tmp/anykernel/bin)" ]; then
-  abort "* Recovery busybox setup failed. Aborting...";
+  abort "  * Recovery busybox setup failed. Aborting...";
 fi;
 PATH="/tmp/anykernel/bin:$PATH" $bb ash /tmp/anykernel/anykernel.sh $2;
 if [ $? != "0" ]; then
@@ -92,7 +102,7 @@ if [ $? != "0" ]; then
 fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
-  ui_print "* Pushing modules...";
+  ui_print "  * Pushing modules...";
   mount -o rw,remount -t auto /system;
   mount -o rw,remount -t auto /vendor 2>/dev/null;
   cd /tmp/anykernel/modules;
@@ -126,13 +136,13 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
 
-ui_print "* System Destroyed!!..    ";
-ui_print "* Logging out...";
+ui_print "  * System Energized!!..    ";
+ui_print "  * Logging out...";
 
 umount /system;
 umount /vendor 2>/dev/null;
 umount /data 2>/dev/null;
 ui_print "                                   ";
-ui_print "===================================";
-ui_print "*     LolZ-Kernel Installed!!     *";
-ui_print "===================================";
+ui_print "  ===================================";
+ui_print "  *     LolZ-Kernel Installed!!     *";
+ui_print "  ===================================";
