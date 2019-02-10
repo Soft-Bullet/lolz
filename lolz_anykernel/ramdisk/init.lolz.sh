@@ -14,8 +14,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
+# Huge thanks to sunipaulmathew,sultanxda and justjr @ xda-developers.com
+#
 
-    # Huge thanks to sunipaulmathew,sultanxda and justjr @ xda-developers.com
 
     # Tweak Interactive CPU governor
     echo "20000 1190400:60000 1728000:74000 1958400:82000 2265600:120000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
@@ -37,21 +38,6 @@
     echo 0 > /sys/module/msm_hotplug/msm_enabled
     echo 0 > /sys/kernel/intelli_plug/intelli_plug_active
     echo 1 > /sys/module/lazyplug/parameters/lazyplug_active
-    echo 8 > /sys/module/lazyplug/parameters/nr_run_hysteresis
-
-    # Thermal
-    echo 0 > /sys/module/msm_thermal/vdd_restriction/enabled
-    echo 0 > /sys/module/msm_thermal/parameters/enabled
-    echo 1 > /sys/module/msm_thermal/core_control/enabled
-    echo 80 > /sys/module/msm_thermal/parameters/freq_mitig_temp_degc
-    echo 90 > /sys/module/msm_thermal/parameters/core_temp_limit_degC
-    echo 85 > /sys/module/msm_thermal/parameters/hotplug_temp_degC
-
-    # LMK
-    echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-    chmod 666 /sys/module/lowmemorykiller/parameters/minfree
-    chown root /sys/module/lowmemorykiller/parameters/minfree
-    echo "10240,14336,18432,34816,47104,55296" > /sys/module/lowmemorykiller/parameters/minfree
 
     # VM
     echo 0 > /proc/sys/vm/oom_dump_tasks
@@ -60,6 +46,10 @@
     echo 100 > /proc/sys/vm/vfs_cache_pressure
     echo 30 > /proc/sys/vm/dirty_ratio
     echo 1 > /proc/sys/vm/page-cluster
+
+    # Set I/O Scheduler
+    echo "cfq" > sys/block/mmcblk1/queue/scheduler
+    echo "cfq" > /sys/block/mmcblk0/queue/scheduler
 
     # IO
     echo 1 > /sys/block/mmcblk0/queue/rq_affinity
@@ -75,16 +65,16 @@
     chmod 644 /proc/sys/net/ipv4/tcp_congestion_control
 
     # Disable CPU Input Boost
-    echo 0 /sys/kernel/cpu_input_boost/enabled
+    echo 0 > /sys/kernel/cpu_input_boost/enabled
 
     # Enable Multi-Core Power Saving
-    echo 1  /sys/devices/system/cpu/sched_mc_power_savings
+    echo 1 > /sys/devices/system/cpu/sched_mc_power_savings
 
     # Set GPU Governor
     echo "msm-adreno-tz" > /sys/class/kgsl/kgsl-3d0/devfreq/governor
     echo 27000000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
     echo 600000000 > /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
-    chmod 666  /sys/class/kgsl/kgsl-3d0/max_gpuclk
+    chmod 666 /sys/class/kgsl/kgsl-3d0/max_gpuclk
     echo 450000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
 
 # The END

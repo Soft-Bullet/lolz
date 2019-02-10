@@ -13,11 +13,9 @@ ARCHITECTURE="arm"
 
 KERNEL_NAME="LolZ-kernel"
 
-LOLZ_NAME="⚡LolZ-kernel⚡"
-
 KERNEL_VARIANT="hlte"	# options: hlte, hltekor, hltetmo, hltechn
 
-KERNEL_VERSION="6.4"   # leave as such, if no specific version tag
+KERNEL_VERSION="6.4.5"   # leave as such, if no specific version tag
 
 KERNEL_DATE="$(date +"%Y%m%d")"
 
@@ -73,7 +71,7 @@ fi
 echo -e $COLOR_NEUTRAL"\n building $KERNEL_NAME $KERNEL_VERSION for $KERNEL_VARIANT \n"$COLOR_NEUTRAL
 make -C $(pwd) O=$BUILD_DIR $KERNEL_DEFCONFIG
 # updating kernel version
-sed -i "s;lineageos;$LOLZ_NAME-V$KERNEL_VERSION;" $BUILD_DIR/.config;
+sed -i "s;lineageos;$KERNEL_NAME-V$KERNEL_VERSION;" $BUILD_DIR/.config;
 make -j$NUM_CPUS -C $(pwd) O=$BUILD_DIR
 if [ -e $KERNEL_IMAGE ]; then
 	echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
@@ -103,7 +101,7 @@ if [ -e $KERNEL_IMAGE ]; then
 		mkdir $RELEASE_DIR
 	fi
 	rm $ANYKERNEL_DIR/zImage && mv $ANYKERNEL_DIR/$KERNEL_NAME-$KERNEL_VARIANT* $RELEASE_DIR
-	echo -e $COLOR_GREEN"\n Lolz is baked... please visit '$RELEASE_DIR'...\n"$COLOR_NEUTRAL
+	echo -e $COLOR_GREEN"\n Lolz for $KERNEL_VARIANT is baked... now goto '$RELEASE_DIR' folder...\n"$COLOR_NEUTRAL
 else
 	echo -e $COLOR_RED"\n Building failed. Please fix the issues and try again...\n"$COLOR_RED
 fi
