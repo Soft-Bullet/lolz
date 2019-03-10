@@ -7,7 +7,7 @@
 #
 # ***** ***** *Variables to be configured manually* ***** ***** #
 
-TOOLCHAIN="/home/jprim/linaro/bin/arm-linux-androideabi-"
+TOOLCHAIN="$HOME/linaro/bin/arm-linux-androideabi-"
 
 ARCHITECTURE="arm"
 
@@ -103,5 +103,5 @@ if [ -e $KERNEL_IMAGE ]; then
 	rm $ANYKERNEL_DIR/zImage && mv $ANYKERNEL_DIR/$KERNEL_NAME-$KERNEL_VARIANT* $RELEASE_DIR
 	echo -e $COLOR_GREEN"\n Lolz for $KERNEL_VARIANT is baked... now goto '$RELEASE_DIR' folder...\n"$COLOR_NEUTRAL
 else
-	echo -e $COLOR_RED"\n Building failed. Please fix the issues and try again...\n"$COLOR_RED
+	echo -e $COLOR_RED"\n Building failed... Please fix the derp you made and try again...\n"$COLOR_RED
 fi
