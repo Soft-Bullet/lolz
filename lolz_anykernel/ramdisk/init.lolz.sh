@@ -16,6 +16,11 @@
 #
 # Huge thanks to sunipaulmathew,sultanxda and justjr @ xda-developers.com
 #
+    # Set Interactive governor for all cores
+    echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo "interactive" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+    echo "interactive" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+    echo "interactive" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
 
     # Tweak Interactive CPU governor
     echo "20000 1190400:60000 1728000:74000 1958400:82000 2265600:120000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
