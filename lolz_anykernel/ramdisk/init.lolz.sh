@@ -17,7 +17,6 @@
 # Huge thanks to sunipaulmathew,sultanxda and justjr @ xda-developers.com
 #
 
-
     # Tweak Interactive CPU governor
     echo "20000 1190400:60000 1728000:74000 1958400:82000 2265600:120000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
     echo 99 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
@@ -43,24 +42,13 @@
     echo "cfq" > sys/block/mmcblk1/queue/scheduler
     echo "cfq" > /sys/block/mmcblk0/queue/scheduler
 
-    # IO
-    echo 1 > /sys/block/mmcblk0/queue/rq_affinity
-    echo 0 > /sys/block/mmcblk0/queue/iostats
-    echo 1024 > /sys/block/mmcblk0/queue/read_ahead_kb
-    echo 1 > /sys/block/mmcblk1/queue/rq_affinity
-    echo 0 > /sys/block/mmcblk1/queue/iostats
-    echo 2048 > /sys/block/mmcblk1/queue/read_ahead_kb
-
     # Set TCP Congestion
     chmod 777 /proc/sys/net/ipv4/tcp_congestion_control
     echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
     chmod 644 /proc/sys/net/ipv4/tcp_congestion_control
 
     # Disable CPU Input Boost
-    echo 0 > /sys/kernel/cpu_input_boost/enabled
-
-    # Enable Multi-Core Power Saving
-    echo 1 > /sys/devices/system/cpu/sched_mc_power_savings
+    echo 0 > /sys/module/cpu_boost/parameters/input_boost_enabled
 
     # Set GPU Governor
     echo "msm-adreno-tz" > /sys/class/kgsl/kgsl-3d0/devfreq/governor
