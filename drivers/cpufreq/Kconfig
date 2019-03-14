@@ -383,7 +383,7 @@ config CPU_FREQ_GOV_IMPULSE
 
 config CPU_INPUT_BOOST
 	bool "CPU Input Boost"
-	default y
+	default n
 	help
 	  Boosts the CPU on touchscreen and touchpad input. Boost frequencies and
 	  durations are calculated automatically.
