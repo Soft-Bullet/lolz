@@ -732,8 +732,11 @@ const char * const vmstat_text[] = {
 	"nr_cma_inactive_file",
 	"nr_cma_active_file",
 	"nr_cma_unevictable",
-#endif
 	"nr_swapcache",
+#endif
+#ifdef CONFIG_UKSM
+	"nr_uksm_zero_pages",
+#endif
 	"nr_dirty_threshold",
 	"nr_dirty_background_threshold",
 
