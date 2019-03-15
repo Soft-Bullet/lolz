@@ -732,8 +732,8 @@ const char * const vmstat_text[] = {
 	"nr_cma_inactive_file",
 	"nr_cma_active_file",
 	"nr_cma_unevictable",
-	"nr_swapcache",
 #endif
+        "nr_swapcache",
 #ifdef CONFIG_UKSM
 	"nr_uksm_zero_pages",
 #endif
