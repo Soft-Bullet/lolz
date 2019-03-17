@@ -26,7 +26,7 @@ extern struct class *sec_class;
 #include <linux/leds.h>
 #endif
 #include <linux/input.h>
-#include <linux/earlysuspend.h>
+#include <linux/powersuspend.h>
 #include <linux/mutex.h>
 
 #define CONFIG_GLOVE_TOUCH
@@ -57,6 +57,8 @@ extern struct class *sec_class;
 #define TK_BIT_DETECTION_CONFIRM	0xEE
 #define NUM_OF_KEY		4
 
+#define TK_KEYPAD_ENABLE
+
 #ifdef TK_INFORM_CHARGER
 struct touchkey_callbacks {
 	void (*inform_charger)(struct touchkey_callbacks *, bool);
@@ -85,7 +87,7 @@ struct cypress_touchkey_info {
 	struct i2c_client			*client;
 	struct cypress_touchkey_platform_data	*pdata;
 	struct input_dev			*input_dev;
-	struct early_suspend			early_suspend;
+	struct power_suspend			power_suspend;
 	char			phys[32];
 	unsigned char			keycode[NUM_OF_KEY];
 	u8			sensitivity[NUM_OF_KEY];
@@ -133,6 +135,9 @@ struct cypress_touchkey_info {
 	int glove_value;
 #endif
 
+#ifdef TK_KEYPAD_ENABLE
+	atomic_t keypad_enable;
+#endif
 };
 
 void touchkey_charger_infom(bool en);

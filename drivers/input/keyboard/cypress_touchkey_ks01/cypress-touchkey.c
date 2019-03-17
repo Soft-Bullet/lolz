@@ -29,7 +29,7 @@
 #include <linux/platform_device.h>
 #include <linux/gpio.h>
 #include <linux/miscdevice.h>
-#include <linux/earlysuspend.h>
+#include <linux/powersuspend.h>
 #include <linux/i2c/cypress_touchkey.h>
 #include "cypress_tkey_fw.h"
 #include <linux/regulator/consumer.h>
@@ -46,6 +46,9 @@
 #include "issp_extern.h"
 #include <linux/mfd/pm8xxx/pm8921.h>
 //#include "../../../../arch/arm/mach-msm/board-8064.h"
+
+#undef dev_info
+#define dev_info(dev, fmt, arg...) dev_dbg(dev, fmt, ##arg)
 
 #define CYPRESS_GEN		0X00
 #define CYPRESS_FW_VER		0X01
@@ -109,9 +112,9 @@ static int cypress_input_open(struct input_dev *dev);
 static void cypress_input_close(struct input_dev *dev);
 #endif
 
-#ifdef CONFIG_HAS_EARLYSUSPEND
-static void cypress_touchkey_early_suspend(struct early_suspend *h);
-static void cypress_touchkey_late_resume(struct early_suspend *h);
+#ifdef CONFIG_POWERSUSPEND
+static void cypress_touchkey_power_suspend(struct power_suspend *h);
+static void cypress_touchkey_late_resume(struct power_suspend *h);
 #endif
 
 #ifdef TK_INFORM_CHARGER
@@ -808,6 +811,12 @@ static irqreturn_t cypress_touchkey_interrupt(int irq, void *dev_id)
 	int code;
 	int press;
 	int ret;
+
+#ifdef TK_KEYPAD_ENABLE
+	if (!atomic_read(&info->keypad_enable)) {
+		goto out;
+	}
+#endif
 
 	ret = gpio_get_value(info->pdata->gpio_int);
 	if (ret) {
@@ -1527,6 +1536,43 @@ static ssize_t cypress_touchkey_flip_cover_mode_enable(struct device *dev,
 #endif
 
 
+#ifdef TK_KEYPAD_ENABLE
+static ssize_t sec_keypad_enable_show(struct device *dev,
+		struct device_attribute *attr, char *buf)
+{
+	struct cypress_touchkey_info *info = dev_get_drvdata(dev);
+
+	return sprintf(buf, "%d\n", atomic_read(&info->keypad_enable));
+}
+
+static ssize_t sec_keypad_enable_store(struct device *dev,
+		struct device_attribute *attr, const char *buf, size_t count)
+{
+	struct cypress_touchkey_info *info = dev_get_drvdata(dev);
+	unsigned int val;
+	int i;
+
+	if (sysfs_streq(buf, "0"))
+		val = 0;
+	else if (sysfs_streq(buf, "1"))
+		val = 1;
+	else
+		return -EINVAL;
+
+	atomic_set(&info->keypad_enable, val);
+	if (val) {
+		for (i = 0; i < ARRAY_SIZE(info->keycode); i++)
+			set_bit(info->keycode[i], info->input_dev->keybit);
+	} else {
+		for (i = 0; i < ARRAY_SIZE(info->keycode); i++)
+			clear_bit(info->keycode[i], info->input_dev->keybit);
+	}
+	input_sync(info->input_dev);
+
+	return count;
+}
+#endif
+
 static DEVICE_ATTR(touchkey_firm_update_status, S_IRUGO | S_IWUSR | S_IWGRP,
 		cypress_touchkey_firm_status_show, NULL);
 static DEVICE_ATTR(touchkey_firm_version_panel, S_IRUGO,
@@ -1572,6 +1618,11 @@ static DEVICE_ATTR(flip_mode, S_IRUGO | S_IWUSR | S_IWGRP, NULL,
 		cypress_touchkey_flip_cover_mode_enable);
 #endif
 
+#ifdef TK_KEYPAD_ENABLE
+static DEVICE_ATTR(keypad_enable, S_IRUGO|S_IWUSR, sec_keypad_enable_show,
+		sec_keypad_enable_store);
+#endif
+
 static struct attribute *touchkey_attributes[] = {
 	&dev_attr_touchkey_firm_update_status.attr,
 	&dev_attr_touchkey_firm_version_panel.attr,
@@ -1595,6 +1646,9 @@ static struct attribute *touchkey_attributes[] = {
 #endif
 #ifdef TKEY_FLIP_MODE
 	&dev_attr_flip_mode.attr,
+#endif
+#ifdef TK_KEYPAD_ENABLE
+	&dev_attr_keypad_enable.attr,
 #endif
 	NULL,
 };
@@ -1779,6 +1833,10 @@ static int __devinit cypress_touchkey_probe(struct i2c_client *client,
 	set_bit(EV_LED, input_dev->evbit);
 	set_bit(LED_MISC, input_dev->ledbit);
 
+#ifdef TK_KEYPAD_ENABLE
+	atomic_set(&info->keypad_enable, 1);
+#endif
+
 	for (i = 0; i < pdata->keycodes_size; i++) {
 		info->keycode[i] = pdata->touchkey_keycode[i];
 		set_bit(info->keycode[i], input_dev->keybit);
@@ -1822,7 +1880,6 @@ static int __devinit cypress_touchkey_probe(struct i2c_client *client,
 	if (ret < 0) {
 		/*
 		disable_irq(client->irq);
-
 		if (ISSP_main() == 0) {
 			dev_info(&client->dev, "[TouchKey] Update success!\n");
 			enable_irq(client->irq);
@@ -1845,13 +1902,11 @@ static int __devinit cypress_touchkey_probe(struct i2c_client *client,
 		goto err_req_irq;
 	}
 
-#ifdef CONFIG_HAS_EARLYSUSPEND
-		info->early_suspend.level =
-				EARLY_SUSPEND_LEVEL_BLANK_SCREEN + 1;
-		info->early_suspend.suspend = cypress_touchkey_early_suspend;
-		info->early_suspend.resume = cypress_touchkey_late_resume;
-		register_early_suspend(&info->early_suspend);
-#endif /* CONFIG_HAS_EARLYSUSPEND */
+#ifdef CONFIG_POWERSUSPEND
+		info->power_suspend.suspend = cypress_touchkey_power_suspend;
+		info->power_suspend.resume = cypress_touchkey_late_resume;
+		register_power_suspend(&info->power_suspend);
+#endif /* CONFIG_POWERSUSPEND */
 
 #if defined(CONFIG_GLOVE_TOUCH)
 	info->glove_wq = create_singlethread_workqueue("cypress_touchkey");
@@ -2040,7 +2095,7 @@ static int __devexit cypress_touchkey_remove(struct i2c_client *client)
 	return 0;
 }
 
-#if defined(CONFIG_PM) || defined(CONFIG_HAS_EARLYSUSPEND)
+#if defined(CONFIG_PM) || defined(CONFIG_POWERSUSPEND)
 static int cypress_touchkey_suspend(struct device *dev)
 {
 	struct i2c_client *client = to_i2c_client(dev);
@@ -2100,18 +2155,18 @@ static int cypress_touchkey_resume(struct device *dev)
 }
 #endif
 
-#ifdef CONFIG_HAS_EARLYSUSPEND
-static void cypress_touchkey_early_suspend(struct early_suspend *h)
+#ifdef CONFIG_POWERSUSPEND
+static void cypress_touchkey_power_suspend(struct power_suspend *h)
 {
 	struct cypress_touchkey_info *info;
-	info = container_of(h, struct cypress_touchkey_info, early_suspend);
+	info = container_of(h, struct cypress_touchkey_info, power_suspend);
 	cypress_touchkey_suspend(&info->client->dev);
 }
 
-static void cypress_touchkey_late_resume(struct early_suspend *h)
+static void cypress_touchkey_late_resume(struct power_suspend *h)
 {
 	struct cypress_touchkey_info *info;
-	info = container_of(h, struct cypress_touchkey_info, early_suspend);
+	info = container_of(h, struct cypress_touchkey_info, power_suspend);
 	cypress_touchkey_resume(&info->client->dev);
 }
 #endif
@@ -2151,7 +2206,7 @@ static void cypress_input_close(struct input_dev *dev)
 }
 #endif
 
-#if defined(CONFIG_PM) && !defined(CONFIG_HAS_EARLYSUSPEND) && !defined(USE_OPEN_CLOSE)
+#if defined(CONFIG_PM) && defined(CONFIG_POWERSUSPEND) && !defined(USE_OPEN_CLOSE)
 static const struct dev_pm_ops cypress_touchkey_pm_ops = {
 	.suspend	= cypress_touchkey_suspend,
 	.resume		= cypress_touchkey_resume,
@@ -2165,7 +2220,7 @@ struct i2c_driver cypress_touchkey_driver = {
 		.name = "cypress_touchkey",
 		.owner = THIS_MODULE,
 		.of_match_table = cypress_match_table,
-#if defined(CONFIG_PM) && !defined(CONFIG_HAS_EARLYSUSPEND) && !defined(USE_OPEN_CLOSE)
+#if defined(CONFIG_PM) && defined(CONFIG_POWERSUSPEND) && !defined(USE_OPEN_CLOSE)
 		.pm	= &cypress_touchkey_pm_ops,
 #endif
 		   },

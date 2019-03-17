@@ -4,7 +4,6 @@
 #ifdef PROJECT_REV_304
 /*
 * Copyright 2006-2007, Cypress Semiconductor Corporation.
-
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
 * as published by the Free Software Foundation; either version 2
@@ -44,7 +43,7 @@
 #include <linux/gpio.h>
 #include <linux/miscdevice.h>
 #include <linux/uaccess.h>
-#include <linux/earlysuspend.h>
+#include <linux/powersuspend.h>
 #include <linux/io.h>
 #include <linux/hrtimer.h>
 
@@ -80,12 +79,10 @@ unsigned char  fIsError;
  Run Clock without sending/receiving bits. Use this when transitioning from
  write to read and read to write "num_cycles" is number of SCLK cycles, not
  number of counter cycles.
-
  SCLK cannot run faster than the specified maximum frequency of 8MHz. Some
  processors may need to have delays added after setting SCLK low and setting
  SCLK high in order to not exceed this specification. The maximum frequency
  of SCLK should be measured as part of validation of the final program
-
  ============================================================================
 */
 void RunClock(unsigned int iNumCycles)
@@ -102,12 +99,10 @@ void RunClock(unsigned int iNumCycles)
  bReceiveBit()
  Clocks the SCLK pin (high-low-high) and reads the status of the SDATA pin
  after the rising edge.
-
  SCLK cannot run faster than the specified maximum frequency of 8MHz. Some
  processors may need to have delays added after setting SCLK low and setting
  SCLK high in order to not exceed this specification. The maximum frequency
  of SCLK should be measured as part of validation of the final program
-
  Returns:
      0 if SDATA was low
      1 if SDATA was high
@@ -148,12 +143,10 @@ unsigned char bReceiveByte(void)
  This routine sends up to one byte of a vector, one bit at a time.
     bCurrByte   the byte that contains the bits to be sent.
     bSize       the number of bits to be sent. Valid values are 1 to 8.
-
  SCLK cannot run faster than the specified maximum frequency of 8MHz. Some
  processors may need to have delays added after setting SCLK low and setting
  SCLK high in order to not exceed this specification. The maximum frequency
  of SCLK should be measured as part of validation of the final program
-
  There is no returned value.
  ============================================================================
 */
@@ -183,7 +176,6 @@ void SendByte(unsigned char bCurrByte, unsigned char bSize)
     bVect      a pointer to the vector to be sent.
     nNumBits   the number of bits to be sent.
     bCurrByte  scratch var to keep the byte to be sent.
-
  There is no returned value.
  ============================================================================
 */
@@ -213,17 +205,14 @@ void SendVector(const unsigned char *bVect, unsigned int iNumBits)
  fDetectHiLoTransition(). The timing of the while(1) loops can be calculated
  and the number of loops is counted, using iTimer, to determine when 100
  msec has passed.
-
  SCLK cannot run faster than the specified maximum frequency of 8MHz. Some
  processors may need to have delays added after setting SCLK low and setting
  SCLK high in order to not exceed this specification. The maximum frequency
  of SCLK should be measured as part of validation of the final program
-
  Returns:
      0 if successful
     -1 if timed out.
  ============================================================================
-
 */
 signed char fDetectHiLoTransition(void)
 {
@@ -237,9 +226,7 @@ signed char fDetectHiLoTransition(void)
      These loops look unconventional, but it is necessary to check SDATA_PIN
      as shown because the transition can be missed otherwise, due to the
      length of the SDATA Low-High-Low after certain commands.
-
      Generate clocks for the target to pull SDATA High
-
  */
 	iTimer = TRANSITION_TIMEOUT;
 
@@ -315,7 +302,6 @@ signed char fXRESInitializeTargetForISSP(void)
 	  to separate the above RESET_MODE or POWER_CYCLE_MODE code from the
 	  Init-Vector instructions below. Doing so could introduce excess delay
 	  and cause the target device to exit ISSP Mode.
-
 	PTJ: Send id_setup_1 instead of init1_v
 	PTJ: both send CA Test Key and do a Calibrate1 SROM function
 	*/
@@ -343,7 +329,6 @@ signed char fXRESInitializeTargetForISSP(void)
      0 if successful
      INIT_ERROR if timed out on handshake to the device.
  ============================================================================
-
 */
 signed char fPowerCycleInitializeTargetForISSP(struct cypress_touchkey_info *info)
 {
@@ -375,7 +360,6 @@ signed char fPowerCycleInitializeTargetForISSP(struct cypress_touchkey_info *inf
 	/*
 	 Set SCLK to high Z so there is no clock and wait for a high to low
 	 transition on SDAT. SCLK is not needed this time.
-
 	*/
 	SetSCLKHiZ();
 	fIsError = fDetectHiLoTransition();
@@ -388,14 +372,12 @@ signed char fPowerCycleInitializeTargetForISSP(struct cypress_touchkey_info *inf
 	SetSCLKStrong();
 	SCLKLow();
 /*PTJ: DO NOT SET A BREAKPOINT HERE AND EXPECT SILICON ID TO PASS!
-
 	!!! NOTE:
 	The timing spec that requires that the first Init-Vector happen within
 	1 msec after the reset/power up. For this reason, it is not advisable
 	to separate the above RESET_MODE or POWER_CYCLE_MODE code from the
 	Init-Vector instructions below. Doing so could introduce excess delay
 	and cause the target device to exit ISSP Mode.
-
 	*/
 
 	 SendVector(wait_and_poll_end, num_bits_wait_and_poll_end);
@@ -479,7 +461,6 @@ signed char fReadStatus(void)
 	bTargetStatus[0] = bReceiveByte();
 	RunClock(1);
 	/*SendVector(read_id_v+2, 12);// 12 bits starting from the 3rd character
-
 	//RunClock(2);                    // Read-LSB Command
 	//bTargetStatus[1] = bReceiveByte();
 	//RunClock(1);*/
@@ -613,7 +594,6 @@ signed char fSyncDisable(void)
      0 if successful
      ERASE_ERROR if timed out on handshake to the device.
  ============================================================================
-
 */
 
 signed char fEraseTarget(void)
@@ -757,7 +737,6 @@ signed char fAccTargetBankChecksum(unsigned int *pAcc)
 }
 
 /*
-
  ============================================================================
  ReStartTarget()
  After programming, the target PSoC must be reset to take it out of

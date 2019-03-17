@@ -7,13 +7,13 @@
 #
 # ***** ***** *Variables to be configured manually* ***** ***** #
 
-TOOLCHAIN="$HOME/linaro/bin/arm-linux-androideabi-"
+TOOLCHAIN="/home/tobe/Bureau/x/bin/arm-eabi-"
 
 ARCHITECTURE="arm"
 
 KERNEL_NAME="LolZ-kernel"
 
-KERNEL_VARIANT="hlte"	# options: hlte, hltekor, hltetmo, hltechn
+KERNEL_VARIANT="ks01lte"	# options: hlte, hltekor, hltetmo, hltechn
 
 KERNEL_VERSION="7.0"   # leave as such, if no specific version tag
 
@@ -54,7 +54,7 @@ elif [ "hltetmo" == "$KERNEL_VARIANT" ]; then
 elif [ "hltechn" == "$KERNEL_VARIANT" ]; then
 	KERNEL_DEFCONFIG="lineage_hltechn_defconfig"
 else
-	KERNEL_VARIANT="hlte" && KERNEL_DEFCONFIG="lineage_hlte_bcm2079x_defconfig"
+	KERNEL_VARIANT="ks01lte" && KERNEL_DEFCONFIG="lineage_ks01lte_defconfig"
 fi
 
 # Initialize building...
