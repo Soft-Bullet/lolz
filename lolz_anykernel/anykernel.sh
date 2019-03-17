@@ -32,10 +32,6 @@ dump_boot;
 
 # begin ramdisk changes
 
-# init.rc
-backup_file init.rc;
-grep "import /init.lolz.rc" init.rc >/dev/null || sed -i '1,/.*import.*/s/.*import.*/import \/init.lolz.rc\n&/' init.rc
-
  # init.qcom.rc
 backup_file init.qcom.rc;
 remove_line init.qcom.rc "start mpdecision";
@@ -46,6 +42,12 @@ insert_line init.qcom.rc "u:r:init:s0 root root -- /init.lolz.sh" after "Post bo
 insert_line init.qcom.rc "u:r:supersu:s0 root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:supersu:s0 root root -- /init.lolz.sh"
 insert_line init.qcom.rc "root root -- /init.lolz.sh" after "Post boot services"  "    exec u:r:supersu:s0 root root -- /init.lolz.sh"
 insert_line init.qcom.rc "Execute lolz boot script..." after "Post boot services" "    # Execute lolz boot script..."
+insert_line init.qcom.rc "init.lolz.rc" after "import init.target.rc" "import init.lolz.rc";
+
+# init.target.rc
+backup_file init.target.rc; 
+replace_section init.target.rc "service mpdecision" " " "#service mpdecision /vendor/bin/mpdecision --avg_comp\n#   class main\n#   user root\n#   group root readproc\n#   disabled";
+
 
 # end ramdisk changes
 
