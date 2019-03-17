@@ -62,13 +62,13 @@ if [ -f /tmp/anykernel/banner ]; then
 fi;
 
 ui_print "  ===================================";
-ui_print "  *  LolZ-Kernel For 8.1 and 9.0    *";
+ui_print "  *  LolZ-Kernel For Oreo and PIE   *";
 ui_print "  *          by jprimero15          *";
 ui_print "  ===================================";
 ui_print "                                     ";
 ui_print "  * Logging in to twrp.me...         ";
 ui_print "  * Logged in successfully!          ";
-ui_print "  * Lolz version: 6.4.5";
+ui_print "  * Lolz version: 7.0";
 
 umount /system 2>/dev/null;
 umount /vendor 2>/dev/null;
